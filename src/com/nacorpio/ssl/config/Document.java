@@ -93,7 +93,13 @@ public class Document {
 	public final void saveAs(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
 		PrintWriter writer = new PrintWriter(fileName, "UTF-8");
 		for (Value value: values) {
-			writer.println(StructureUtil.getValueMarkup(value.getKey(), value.getValue()));
+			if (value.getValue() instanceof String) {
+				writer.println(StructureUtil.getValueMarkup(value.getKey(), value.getValue()));
+			} else if (value.getValue() instanceof ArrayList<?>) {
+				writer.println(StructureUtil.getArrayMarkup(value.getKey(), (ArrayList<?>) value.getValue()));
+			} else if (value.getValue() instanceof List<?>) {
+				writer.println(StructureUtil.getListMarkup(value.getKey(), (List<?>) value.getValue()));
+			}
 		}
 		writer.close();
 	}
