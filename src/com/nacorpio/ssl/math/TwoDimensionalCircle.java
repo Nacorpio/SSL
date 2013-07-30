@@ -1,5 +1,7 @@
 package com.nacorpio.ssl.math;
 
+import com.nacorpio.ssl.utilities.Math;
+
 public class TwoDimensionalCircle {
 	
 //	area = PI * (radius) * (radius) or

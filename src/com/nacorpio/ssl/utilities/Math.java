@@ -1,4 +1,4 @@
-package com.nacorpio.ssl.math;
+package com.nacorpio.ssl.utilities;
 
 public final class Math {
 
