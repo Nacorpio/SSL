@@ -1,5 +1,6 @@
-package com.nacorpio.ssl.config;
+package com.nacorpio.ssl.utilities;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,10 @@ public final class StructureUtil {
 		}
 		markup += "}</key>";
 		return markup;
+	}
+	
+	public final static String getMethodMarkup(String key, Method met) {
+		return "<met=\"" + key + "\">@" + met.getName() + "</met>";
 	}
 	
 	public final static String getListMarkup(String key, List<?> list) {
