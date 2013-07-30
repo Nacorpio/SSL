@@ -6,8 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.nacorpio.ssl.utilities.StructureUtil;
 
 public class Document {
 	
@@ -80,6 +85,13 @@ public class Document {
 		}
 	}
 	
+	public final void callMethod(String key) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		if (getValue(key).getValue() instanceof Method) {
+			Method met = (Method) getValue(key).getValue();
+			met.invoke(null);
+		}
+	}
+	
 	public final Value getValue(String key) throws IOException {
 		Value value = null;
 		for (Value v: values) {
@@ -93,12 +105,14 @@ public class Document {
 	public final void saveAs(String fileName) throws FileNotFoundException, UnsupportedEncodingException {
 		PrintWriter writer = new PrintWriter(fileName, "UTF-8");
 		for (Value value: values) {
-			if (value.getValue() instanceof String) {
+			if (value.getValue() instanceof String || value.getValue() instanceof Integer || value.getValue() instanceof Long || value.getValue() instanceof Double) {
 				writer.println(StructureUtil.getValueMarkup(value.getKey(), value.getValue()));
 			} else if (value.getValue() instanceof ArrayList<?>) {
 				writer.println(StructureUtil.getArrayMarkup(value.getKey(), (ArrayList<?>) value.getValue()));
 			} else if (value.getValue() instanceof List<?>) {
 				writer.println(StructureUtil.getListMarkup(value.getKey(), (List<?>) value.getValue()));
+			} else if (value.getValue() instanceof Method) {
+				writer.println(StructureUtil.getMethodMarkup(value.getKey(), (Method) value.getValue()));
 			}
 		}
 		writer.close();
