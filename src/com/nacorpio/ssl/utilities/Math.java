@@ -15,4 +15,10 @@ public final class Math {
 		return radius * 2;
 	}
 	
+	public static final boolean isNumerical(Object v) {
+		return (v instanceof Double || v instanceof Integer ||
+				v instanceof Long || v instanceof Float ||
+				v instanceof Short);
+	}
+	
 }

@@ -85,10 +85,12 @@ public class Document {
 		}
 	}
 	
-	public final void callMethod(String key) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public final void callMethod(String key) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException {
 		if (getValue(key).getValue() instanceof Method) {
 			Method met = (Method) getValue(key).getValue();
-			met.invoke(null);
+			Class<?> c = Class.forName(TestConsole.class.getName());
+			met.setAccessible(true);
+			met.invoke(c.newInstance());
 		}
 	}
 	
